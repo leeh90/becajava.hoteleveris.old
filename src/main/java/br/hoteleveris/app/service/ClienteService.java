@@ -47,9 +47,9 @@ public class ClienteService {
 		ClienteResponse response = new ClienteResponse();
 	
 		
-		if (_repository.existsById(id) == false || id == null) {
+		if (_repository.existsById(id) == false || id == null) 
 			return new ClienteResponse(404, "Nenhum registro encontrado.");
-		}
+		
 		
 		Optional<Cliente> cliente = _repository.findById(id);
 

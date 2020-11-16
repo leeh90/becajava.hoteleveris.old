@@ -11,4 +11,6 @@ public interface TipoQuartoRepository extends JpaRepository<TipoQuarto, Long> {
 
 	Optional<TipoQuarto> findById(Long id);
 
+	@Override
+	boolean existsById(Long id);
 }

@@ -20,17 +20,13 @@ import br.hoteleveris.app.service.ClienteService;
 @RequestMapping("/clientes")
 public class ClienteController extends BaseController {
 
-	final ClienteService _service;
-
 	@Autowired
-	public ClienteController(ClienteService service) {
-		_service = service;
-	}
+	private ClienteService _service;
 
 	@PostMapping
-	public ResponseEntity inserir(ClienteRequest clienteRequest) {
+	public ResponseEntity inserir(ClienteRequest request) {
 		try {
-			BaseResponse response = _service.inserir(clienteRequest);
+			BaseResponse response = _service.inserir(request);
 			return ResponseEntity.status(response.getStatusCode()).body(response);
 
 		} catch (Exception e) {
