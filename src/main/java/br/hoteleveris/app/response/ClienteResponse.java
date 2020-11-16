@@ -2,8 +2,27 @@ package br.hoteleveris.app.response;
 
 public class ClienteResponse extends BaseResponse {
 
+	private Long id;
 	private String nome;
 	private String cpf;
+
+	public ClienteResponse() {
+
+	}
+
+	public ClienteResponse(int statusCode, String message) {
+		setStatusCode(statusCode);
+		setMessage(message);
+
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 

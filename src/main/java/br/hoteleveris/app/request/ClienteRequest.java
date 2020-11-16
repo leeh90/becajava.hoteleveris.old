@@ -6,6 +6,16 @@ public class ClienteRequest {
 	private String cpf;
 	private String hash;
 
+	public ClienteRequest() {
+		
+	}
+
+	public ClienteRequest(String nome, String cpf, String hash) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.hash = hash;
+	}
+
 	public String getNome() {
 		return nome;
 	}

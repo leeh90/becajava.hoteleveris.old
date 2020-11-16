@@ -3,6 +3,7 @@ package br.hoteleveris.app.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import br.hoteleveris.app.response.ClienteResponse;
@@ -15,60 +16,50 @@ import br.hoteleveris.app.response.BaseResponse;
 public class ClienteService {
 
 	@Autowired
-	private ClienteRepository _repository;
+	final ClienteRepository _repository;
 
 	public ClienteService(ClienteRepository repository) {
 		_repository = repository;
 
 	}
 
-	public BaseResponse inserir(ClienteRequest clienteRequest) {
+	public BaseResponse inserir(ClienteRequest request) {
+
+		if (request.getNome().equals(""))
+			return new BaseResponse(400, "Preencha o campo Nome.");
+		if (request.getCpf().equals(""))
+			return new BaseResponse(400, "Preencha o campo Cpf.");
+		if (request.getHash().equals(""))
+			return new BaseResponse(400, "Preencha o campo Hash.");
+
 		Cliente cliente = new Cliente();
-		BaseResponse base = new BaseResponse();
-		base.StatusCode = 400;
 
-		if (clienteRequest.getNome().equals("")) {
-			base.Message = "Preencha o campo nome.";
-			return base;
-		}
-
-		if (clienteRequest.getCpf().equals("")) {
-			base.Message = "Preencha o campo Cpf.";
-			return base;
-		}
-
-		if (clienteRequest.getHash().equals("")) {
-			base.Message = "Preencha o campo Hash.";
-			return base;
-		}
-
-		cliente.setNome(clienteRequest.getNome());
-		cliente.setCpf(clienteRequest.getCpf());
-		cliente.setHash(clienteRequest.getHash());
+		cliente.setNome(request.getNome());
+		cliente.setCpf(request.getCpf());
+		cliente.setHash(request.getHash());
 
 		_repository.save(cliente);
-		base.StatusCode = 201;
-		base.Message = "Inserido com sucesso.";
+		return new BaseResponse(201, "Inserido com sucesso.");
 
-		return base;
 	}
 
 	public ClienteResponse obter(Long id) {
-		Optional<Cliente> cliente = _repository.findById(id);		
 		ClienteResponse response = new ClienteResponse();
+	
 		
-		if (cliente.get().getId().equals("") || (cliente.get().getId() <= 0 )){
-			response.Message = "Cliente não encontrado";
-			response.StatusCode = 404;
-			return response;
+		if (_repository.existsById(id) == false || id == null) {
+			return new ClienteResponse(404, "Nenhum registro encontrado.");
 		}
 		
+		Optional<Cliente> cliente = _repository.findById(id);
+
+		response.setStatusCode(200);
+		response.setMessage("Registro localizado com sucesso.");
+		response.setId(cliente.get().getId());
 		response.setNome(cliente.get().getNome());
 		response.setCpf(cliente.get().getCpf());
-
-		response.Message = "Cliente obtido com sucesso";
-		response.StatusCode = 200;
 		return response;
+
 	}
 
 }
