@@ -16,12 +16,12 @@ import br.hoteleveris.app.response.BaseResponse;
 public class ClienteService {
 
 	@Autowired
-	final ClienteRepository _repository;
+	private ClienteRepository _repository;
 
-	public ClienteService(ClienteRepository repository) {
-		_repository = repository;
-
-	}
+//	public ClienteService(ClienteRepository repository) {
+//		_repository = repository;
+//
+//	}
 
 	public BaseResponse inserir(ClienteRequest request) {
 

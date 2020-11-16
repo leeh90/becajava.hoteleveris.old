@@ -12,4 +12,7 @@ public interface ComodidadeRepository extends JpaRepository<Comodidade, Long> {
 
 	Optional<Comodidade> findById(Long id);
 
+	@Override
+	boolean existsById(Long id);
+
 }
